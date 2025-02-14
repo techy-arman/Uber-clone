@@ -1,23 +1,35 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { captainDataContext } from '../Context/CaptainContext'
+import axios from 'axios'
+
 
 const Captainlogin = () => {
+    const navigate = useNavigate()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [captainData, setCaptainData] = useState({})
-    const submitHandler = (e) => {
+    const {captain, setCaptain} = useContext(captainDataContext)
+
+    const submitHandler =async (e) => {
         e.preventDefault();
-        setCaptainData({
+        const captain = {
             email: email,
             password: password
-        })
+        }
+        const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/captain/login`, captain)
+        if(response.status === 200){
+            const data = response.data;
+            setCaptain(data.captain);
+            localStorage.setItem("token", data.token);
+            navigate('/captain-home');
+        }
         setEmail('')
         setPassword('')
     }
     return (
-        <div>
-            <div className='p-7 flex justify-between flex-col h-screen'>
+        <div> 
+            <div className='p-7 flex justify-between flex-col h-screen border-[1px] border-zinc-300'>
                 <div>
                     <img className='w-20 mb-10' src="https://pngimg.com/uploads/uber/uber_PNG24.png" alt="" />
                     <form action="" onSubmit={(e) => submitHandler(e)}>

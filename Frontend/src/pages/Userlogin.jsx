@@ -1,23 +1,35 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
-
+import { Link,useNavigate } from 'react-router-dom'
+import { UserDataContext } from '../Context/UserContext'
+import axios from 'axios'
 
 const Userlogin = () => {
    const [email,setEmail] =  useState('')
    const [password,setPassword] =  useState('')
    const [userData,setUserData] =  useState({})
-   const submitHandler = (e) =>{
+
+   const {user,setUser} = useContext(UserDataContext)
+   const navigate = useNavigate()
+   const submitHandler =async (e) =>{
     e.preventDefault();
-    setUserData({
+    const userData = {
         email:email,
         password:password
-    })
+    }
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/login`,userData)
+    console.log(response)
+    if(response.status === 200){
+        const data = response.data
+        setUser(data.user)
+        localStorage.setItem("token", data.token)
+        navigate('/home')
+    }
     setEmail('')
     setPassword('')
    }
   return ( 
-    <div className='p-7 flex justify-between flex-col h-screen'>
+    <div className='p-7 flex justify-between flex-col h-screen border-[1px] border-zinc-300'>
        <div>
        <img className='w-20 mb-10' src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" alt="" /> 
       <form action="" onSubmit={(e)=>submitHandler(e)}>  

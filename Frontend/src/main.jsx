@@ -4,18 +4,16 @@ import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import App from './App.jsx'
 import UserContext from './Context/UserContext.jsx'
+import CaptainContext from './Context/CaptainContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <UserContext>
-      <BrowserRouter>
-        <div className='w-full h-screen flex items-center justify-center'>
-          <div className='w-1/4 min-w-[400px]'>
-          <App />                   
-          </div>
-        </div>
-
-      </BrowserRouter>
-    </UserContext>
+    <CaptainContext>
+      <UserContext>
+        <BrowserRouter>
+              <App />
+        </BrowserRouter>
+      </UserContext>
+    </CaptainContext>
   </StrictMode>,
 )

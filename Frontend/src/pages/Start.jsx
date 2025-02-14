@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const Home = () => {
+const Start = () => {
   return (
     <div>
         <div className=" bg-[url(https://img.freepik.com/free-photo/close-up-new-york-street-signs_23-2150863249.jpg?t=st=1738164807~exp=1738168407~hmac=0e4e435039a2280decca52414933797c8ef1bdac3b1697a14eaadc12a109c8d2&w=360)] bg-cover bg-center w-full pt-8 flex justify-between flex-col h-screen ">
@@ -15,4 +15,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Start
